@@ -132,7 +132,7 @@
         <variable name="time" public_interface="in" units="millisecond"/>
         <variable initial_value="3.8e-14" name="D" units="dimensionless"/>
         <variable initial_value="1e-14" name="A_1" units="dimensionless"/>
-        <variable initial_value="3.4e-13" name="A_2" units="dimensionless"/>
+        <variable initial_value="0.0444557705319849" name="A_2" units="dimensionless"/>
         <variable initial_value="1e-16" name="x_1" units="micrometer"/>
         <variable initial_value="8e-3" name="x_2" units="micrometer"/>
         <variable initial_value="8e-3" name="x_0" units="micrometer"/>
@@ -187,8 +187,7 @@
         <!--0.0175313253125662};-->
         <!-- Dummy Equations (OpenCMISS Bug)-->
         <variable initial_value="0" name="Dummy_1" units="dimensionless"/>
-        <variable initial_value="0" name="Dummy_2" units="dimensionless"/>
-        <variable initial_value="0" name="ext_value" units="dimensionless"/>
+        <!--var ext_value: dimensionless {init: 0};-->
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
                 <eq/>
@@ -548,9 +547,16 @@
             <apply>
                 <eq/>
                 <ci>Activation</ci>
-                <ci>ext_value</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>A_2</ci>
+                        <ci>A_2_0</ci>
+                    </apply>
+                    <ci>A_2_max</ci>
+                </apply>
             </apply>
-            <!--(A_2-A_2_0)/A_2_max;-->
             <apply>
                 <eq/>
                 <ci>f_l</ci>
@@ -635,9 +641,44 @@
             <apply>
                 <eq/>
                 <ci>ActiveStress</ci>
-                <ci>ext_value</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">1.125</cn>
+                            <apply>
+                                <minus/>
+                                <apply>
+                                    <plus/>
+                                    <apply>
+                                        <times/>
+                                        <ci>A_2</ci>
+                                        <ci>x_2</ci>
+                                    </apply>
+                                    <apply>
+                                        <times/>
+                                        <ci>A_1</ci>
+                                        <ci>x_1</ci>
+                                    </apply>
+                                </apply>
+                                <apply>
+                                    <times/>
+                                    <ci>A_2_0</ci>
+                                    <ci>x_0</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>A_2_max</ci>
+                            <ci>x_0</ci>
+                        </apply>
+                    </apply>
+                    <ci>f_l</ci>
+                </apply>
             </apply>
-            <!--1.125{dimensionless}*(A_2*x_2+A_1*x_1-A_2_0*x_0)/(A_2_max*x_0)*f_l;-->
             <apply>
                 <eq/>
                 <apply>
@@ -647,18 +688,12 @@
                     </bvar>
                     <ci>Dummy_1</ci>
                 </apply>
-                <ci>ActiveStress</ci>
-            </apply>
-            <apply>
-                <eq/>
                 <apply>
-                    <diff/>
-                    <bvar>
-                        <ci>time</ci>
-                    </bvar>
-                    <ci>Dummy_2</ci>
+                    <plus/>
+                    <ci>ActiveStress</ci>
+                    <ci>Activation</ci>
+                    <ci>f_l</ci>
                 </apply>
-                <ci>Activation</ci>
             </apply>
         </math>
     </component>

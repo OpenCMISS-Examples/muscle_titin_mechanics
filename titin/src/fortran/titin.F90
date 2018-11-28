@@ -1328,7 +1328,7 @@ PROGRAM TITINEXAMPLE
   CALL cmfe_CellML_VariableSetAsKnown(CellML,shortenModelIndex,"Aliev_Panfilov/I_HH",Err)
   CALL cmfe_CellML_VariableSetAsKnown(CellML,shortenModelIndex,"Razumova/l_hs",Err)
   CALL cmfe_CellML_VariableSetAsKnown(CellML,shortenModelIndex,"Razumova/rel_velo",Err)
-  CALL cmfe_CellML_VariableSetAsKnown(CellML,shortenModelIndex,"Razumova/ext_value",Err)
+!  CALL cmfe_CellML_VariableSetAsKnown(CellML,shortenModelIndex,"Razumova/ext_value",Err)
 !
 !  CALL cmfe_CellML_VariableSetAsKnown(CellML,shortenModelIndex2,"wal_environment/I_HH",Err)
 !  CALL cmfe_CellML_VariableSetAsKnown(CellML,shortenModelIndex2,"razumova/L_S",Err)
@@ -1688,8 +1688,8 @@ PROGRAM TITINEXAMPLE
   !Set the Stimulus for monodomain at the middle of the fibres
   CALL cmfe_CellML_FieldComponentGet(CellML,shortenModelIndex,CMFE_CELLML_PARAMETERS_FIELD, &
    & "Aliev_Panfilov/I_HH",stimcomponent,Err)
-  CALL cmfe_CellML_FieldComponentGet(CellML,shortenModelIndex,CMFE_CELLML_PARAMETERS_FIELD, &
-   & "Razumova/ext_value",testcomponent,Err)
+!  CALL cmfe_CellML_FieldComponentGet(CellML,shortenModelIndex,CMFE_CELLML_PARAMETERS_FIELD, &
+!   & "Razumova/ext_value",testcomponent,Err)
 
   !update the sarcomere stretch at activation
   CALL cmfe_Field_ParametersToFieldParametersComponentCopy(IndependentFieldM,CMFE_FIELD_U1_VARIABLE_TYPE, &
@@ -1708,13 +1708,13 @@ PROGRAM TITINEXAMPLE
   k = k+1
   
   
-  NodeNumber=1
-  DO WHILE(NodeNumber<NumberOfNodesM)
-    CALL cmfe_Decomposition_NodeDomainGet(DecompositionM,NodeNumber,1,NodeDomain,Err)
-    IF(NodeDomain==ComputationalNodeNumber) CALL cmfe_Field_ParameterSetUpdateNode(CellMLParametersField, &
-    & CMFE_FIELD_U_VARIABLE_TYPE,CMFE_FIELD_VALUES_SET_TYPE,1,1,NodeNumber,testcomponent,k/10.0_CMISSRP,Err)
-    NodeNumber=NodeNumber+1
-  ENDDO
+!  NodeNumber=1
+!  DO WHILE(NodeNumber<NumberOfNodesM)
+!    CALL cmfe_Decomposition_NodeDomainGet(DecompositionM,NodeNumber,1,NodeDomain,Err)
+!    IF(NodeDomain==ComputationalNodeNumber) CALL cmfe_Field_ParameterSetUpdateNode(CellMLParametersField, &
+!    & CMFE_FIELD_U_VARIABLE_TYPE,CMFE_FIELD_VALUES_SET_TYPE,1,1,NodeNumber,testcomponent,k/10.0_CMISSRP,Err)
+!    NodeNumber=NodeNumber+1
+!  ENDDO
   
   
 
